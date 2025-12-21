@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داستان شهر رنگی</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --book-width: 46rem;  
+            --book-height: 32rem; 
+            --spine-width: 45px;
+            --cover-color: #6EABC6;
+            --page-bg: #fffbf0;
+            --anim-speed: 0.8s; 
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at center, #FFE16D, #f7f7f8);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+             overflow: hidden;
+            perspective: 2500px;
+        }
+        
+        .scene {
+            position: absolute;
+            width: var(--book-width);
+            height: var(--book-height);
+            transform-style: preserve-3d;
+            top: 50%;
+            left: 400px;
+            transform: translate(-50%, -50%); 
+        }
+
+        /* استایل دایره‌ای و مرتب برای تصاویر شخصیت‌ها */
+    .emoji-img img {
+        width: 150px !important;
+        height: 150px !important;
+        object-fit: cover;
+         border-radius: 50%;
+        border: 5px solid #ffffff;
+        box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+                }
+
+
+
+        .back-cover-fixed {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--cover-color);
+            border-radius: 20px 0 0 20px;
+            z-index: 0;
+            box-shadow: 
+                30px 20px 50px rgba(0,0,0,0.5),
+                inset 10px 0 20px rgba(0,0,0,0.2);
+            transform: translateZ(-5px);
+            border-right: var(--spine-width) solid #6EABC6;
+        }
+        
+        .paper-stack {
+            position: absolute;
+            right: 0;
+            top: 5px;
+            bottom: 5px;
+            width: 99%;
+            background: linear-gradient(90deg, #ccc, #fff 3%, #ccc 6%, #fff);
+            z-index: 1;
+            border-radius: 15px 0 0 15px;
+            transform: translateZ(-2px);
+        }
+
+        .book-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .page {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            transform-origin: right center;
+            transform-style: preserve-3d;
+            transition: transform var(--anim-speed) cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: pointer;
+        }
+
+        .front, .back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--page-bg);
+            backface-visibility: hidden;
+            border-radius: 15px 0 0 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px; 
+            box-sizing: border-box;
+            text-align: center;
+            box-shadow: inset 25px 0 40px rgba(0,0,0,0.06);
+            border: 1px solid #e0d0b0;
+        }
+
+        .back {
+            transform: rotateY(180deg);
+            background: #fff;
+            border-radius: 0 15px 15px 0;
+            box-shadow: inset -25px 0 40px rgba(0,0,0,0.06);
+            border-left: 5px solid #eee; 
+        }
+
+        .flipped {
+            transform: rotateY(-180deg);
+        }
+
+        /* اولویت لایه‌ها */
+        #p1 { z-index: 10; }
+        #p2 { z-index: 9; }
+        #p3 { z-index: 8; }
+        #p4 { z-index: 7; }
+        #p5 { z-index: 6; }
+
+        /* تایپوگرافی داستان */
+        h1 { 
+            font-family: 'Lalezar', cursive;
+            font-size: 4rem; 
+            color: white; 
+            margin: 0; 
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.2); 
+            line-height: 1.2;
+        }
+        
+        h2 { 
+            font-family: 'Lalezar', cursive;
+            color: #253E4C; 
+            font-size: 2.5rem; 
+            margin-bottom: 15px; 
+        }
+
+        p { 
+            font-size: 1.3rem; 
+            color: #444; 
+            line-height: 2.2; 
+            margin-bottom: 20px; 
+            font-weight: 500;
+        }
+        
+        .story-text {
+            text-align: justify;
+            text-align-last: center;
+        }
+
+        .emoji-img {
+            font-size: 110px;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.15));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* دکمه‌های فلش */
+        .arrow-btn {
+            position: absolute;
+            bottom: 30px;
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(231, 76, 60, 0.1);
+            color: #253E4C;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .arrow-btn:hover {
+            background: #253E4C;
+            color: white;
+            transform: scale(1.15);
+        }
+
+        .front .arrow-btn { left: 30px; }
+        .back .arrow-btn { right: 30px; }
+
+        .page-num {
+            position: absolute;
+            bottom: 10px;
+            font-size: 1rem;
+            color: #aaa;
+            font-family: 'Lalezar';
+        }
+        
+        /* دکمه نهایی */
+        .final-btn {
+            background: linear-gradient(45deg, #253E4C, #FF8E53);
+            color: white;
+            padding: 15px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-family: 'Lalezar', cursive;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            display: inline-block;
+            margin-top: 30px;
+            animation: pulse-btn 2s infinite;
+        }
+
+        @keyframes pulse-btn {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* جلد */
+        .cover-front {
+            background: linear-gradient(135deg, #253E4C 0%, #33c8e3 100%);
+            border: 8px solid white;
+        }
+        
+        /* ریسپانسیو */
+        @media (max-width: 768px) {
+            :root { --book-width: 90vw; --book-height: 80vh; }
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.8rem; }
+            p { font-size: 1rem; line-height: 1.8; }
+            .emoji-img { font-size: 80px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scene">
+        <div class="back-cover-fixed"></div>
+        <div class="paper-stack"></div>
+
+        <div class="book-content">
+            
+            <div class="page" id="p5" onclick="flipPage(5)">
+                <div class="front">
+                    <div class="emoji-img"><img src="../pictures/chiko.jpeg" height="150px" width="150px"></div>
+                    <h2>پرنده خبرچین</h2>
+                    <p class="story-text">
+                        پرنده خبرچین روی شاخه نشست و گفت:
+                        <br>«فقط این نیست! هر روز توی این شهر یه جشن تازه داریم. تولد، بازی، اردو... من خبر همه‌شون رو زودتر بهت میگم.»
+                    </p>
+                    <div class="arrow-btn"><i class="fas fa-arrow-left"></i></div>
+                    <span class="page-num">۹</span>
+                </div>
+                <div class="back">
+                    <div class="emoji-img">🚪</div>
+                    <h2>دروازه شهر رنگی</h2>
+                    <p class="story-text">
+                        حالا تو هم راز شهر ما رو میدونی.
+                        <br>بابا درختی، مانی، پازلی و شیرین همگی منتظر تو هستن.
+                        <br>دوست داری همین الان در رو باز کنی و بیای تو؟
+                    </p>
+                    <a href="../html/main.html" class="final-btn">ورود به شهر قصه</a>
+                    <div class="arrow-btn"><i class="fas fa-arrow-right"></i></div>
+                    <span class="page-num">۱۰</span>
+                </div>
+            </div>
+
+            <div class="page" id="p4" onclick="flipPage(4)">
+                <div class="front">
+                    <div class="emoji-img"><img src="../pictures/ranking.jpeg" height="150px" width="150px"></div>
+                    <h2>دنیای رنگ‌ها</h2>
+                    <p class="story-text">
+                        کمی اون‌طرف‌تر، <strong>رنگینک</strong> نشسته بود. اون با قلم‌موهای جادوییش به دیوارهای سفید شهر رنگ می‌پاشید.
+                        <br>گفت: «بیا ببینیم کی می‌تونه قشنگ‌ترین نقاشی دنیا رو بکشه؟»
+                    </p>
+                    <div class="arrow-btn"><i class="fas fa-arrow-left"></i></div>
+                    <span class="page-num">۷</span>
+                </div>
+                <div class="back">
+                    <div class="emoji-img"><img src="../pictures/shirin.jpeg" height="150px" width="150px"></div>
+                    <h2>بوی غذای گرم</h2>
+                    <p class="story-text">
+                        ناگهان بوی خیلی خوبی پیچید.
+                        <br><strong>شیرین کوچولو</strong> با پیش‌بند آشپزی اومد جلو  و گفت:
+                        <br>«بازی بسه! وقت غذاهای خوشمزه و مقوی شده تا قوی بشید.»
+                    </p>
+                    <div class="arrow-btn"><i class="fas fa-arrow-right"></i></div>
+                    <span class="page-num">۸</span>
+                </div>
+            </div>
+
+            <div class="page" id="p3" onclick="flipPage(3)">
+                <div class="front">
+                    <div class="emoji-img"><img src="../pictures/pazeli.jpeg"height="150px" width="150px"></div>
+                    <h2>صدای خنده</h2>
+                    <p class="story-text">
+                        مانی گفت: «صبر کن! صدای خنده کیه؟»
+                        <br>اون <strong>پازلی</strong> بود! شادترین ساکن شهر که هیچوقت آروم نمی‌گرفت.
+                        <br>پازلی با انرژی بالا  گفت: «درس خوندن خوبه، ولی بدون بازی نمیشه!»
+                    </p>
+                    <div class="arrow-btn"><i class="fas fa-arrow-left"></i></div>
+                    <span class="page-num">۵</span>
+                </div>
+                <div class="back">
+                    <div class="emoji-img"><img src="../pictures/pazeli.jpeg" height="150px" width="150px"></div>
+                    <h2>معمای شهر</h2>
+                    <p class="story-text">
+                        پازلی ادامه داد: «توی شهر ما، هر بازی یه رازی داره.
+                        <br>سرسره‌ها، تاب‌ها و معماها منتظرن. اگه معما رو حل کنی، ستاره طلایی می‌گیری!»
+                    </p>
+                    <div class="arrow-btn"><i class="fas fa-arrow-right"></i></div>
+                    <span class="page-num">۶</span>
+                </div>
+            </div>
+
+            <div class="page" id="p2" onclick="flipPage(2)">
+                
+                <div class="front">
+                    <div class="emoji-img"><img src="../pictures/baba.jpeg" height="150px" width="150px"></div>
+                    <h2>بابا درختی</h2>
+                    <p class="story-text">
+                        توی میدون اصلی شهر، <strong>بابا درختی</strong> آرام و مهربون ایستاده بود.
+                        <br>اون با صدای آرومش گفت:
+                        <br>«سلام کوچولوها! به شهر رنگی خوش اومدی. اینجا دوستام زندگی می‌کنن.»
+                    </p>
+                    <div class="arrow-btn"><i class="fas fa-arrow-left"></i></div>
+                    <span class="page-num">۳</span>
+                </div>
+                <div class="back">
+                    <div class="emoji-img"><img src="../pictures/mani.jpeg" height="150px" width="150px"></div>
+                    <h2>مانی باهوش</h2>
+                    <p class="story-text">
+                        کنار بابا درختی، پسری با عینک گرد و کیف مدرسه بود.
+                        <br>اسم اون <strong>مانی باهوش</strong> بود. مانی گفت:
+                        <br>«میای بریم کشف کنیم چرا آسمون آبیه و گل‌ها خوش بو هستن ؟»
+                    </p>
+                    <div class="arrow-btn"><i class="fas fa-arrow-right"></i></div>
+                    <span class="page-num">۴</span>
+                </div>
+            </div>
+
+            <div class="page" id="p1" onclick="flipPage(1)">
+                <div class="front cover-front">
+                    <div class="emoji-img" style="color:white; filter:drop-shadow(0 0 10px rgba(0,0,0,0.3))">🏰</div>
+                    <h1>شهر رنگی</h1>
+                    <p style="color: white; font-size: 1.5rem; margin-top: 10px;">کتاب داستان مهدکودک</p>
+                    <div class="arrow-btn" style="background:white; color:#e74c3c"><i class="fas fa-arrow-left"></i></div>
+                </div>
+                <div class="back">
+                    <div class="emoji-img">✨</div>
+                    <h2>یکی بود یکی نبود...</h2>
+                    <p class="story-text">
+                        روزی روزگاری، در سرزمینی نه خیلی دور، شهری بود که با همه شهرها فرق داشت.
+                        <br>توی این شهر، خانه‌ای بود <strong>پر از رنگ</strong>.
+                        <br>آسمانش همیشه آبی‌تر بود و بچه‌ها همیشه می‌خندیدند...
+                    </p>
+                    <div class="arrow-btn"><i class="fas fa-arrow-right"></i></div>
+                    <span class="page-num">۱ و ۲</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 5;
+
+        function flipPage(pageNum) {
+            const page = document.getElementById(`p${pageNum}`);
+            
+            if (!page.classList.contains('flipped')) {
+                page.classList.add('flipped');
+                // تنظیم سریع Z-Index برای سرعت بالای انیمیشن
+                setTimeout(() => {
+                    page.style.zIndex = pageNum; 
+                }, 400); // نصف 0.8 ثانیه
+            } else {
+                page.classList.remove('flipped');
+                setTimeout(() => {
+                    page.style.zIndex = 10 - pageNum + 1;
+                }, 400);
+            }
+        }
+    </script>
+</body>
+</html>

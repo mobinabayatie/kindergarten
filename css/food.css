@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s;
+    background: #e2f3d9;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.logo{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100px;
+  height: 100px;
+}
+.link{
+    position: absolute;
+    text-decoration: none;
+}
+.arrow{
+    width: 30px;
+    height: 30px;
+    top: 10px;
+    position: relative;
+}
+.breakfast{
+    color: #017369;
+    top: 300px;
+    right:210px;
+}
+.snack{
+    color: #495A82;
+    top: 300px;
+    right:380px;
+}
+.lunch{
+    color: #6E435F;
+    top: 300px;
+    right:440px;
+}
+.content {
+    text-align: center;
+}
+.title {
+    font-size: 250px;
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    transition: 0.5s;
+    z-index: -1;
+    white-space: nowrap;
+}
+
+.food-img {
+    width: 400px;
+    transition: 0.4s;
+    opacity: 0;
+}
+
+.food-enter {
+    animation: enterQuarter 0.8s ease forwards;
+}
+
+@keyframes enterQuarter {
+    0% {
+        transform: translate(-200px, -200px) scale(0.2) rotate(-40deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.food-exit {
+    animation: exitAnim 0.5s ease forwards;
+}
+
+@keyframes exitAnim {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.3) translate(150px, 150px);
+    }
+}
+
+.thumbs {
+    margin-top: 40px;
+    display: flex;
+    gap: 15px;
+}
+
+.thumbs img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-top: 70px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.thumbs img.active {
+    border-color: black;
+}

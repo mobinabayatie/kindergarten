@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food</title>
+    <link rel="stylesheet" href="../css/food.css">
+</head>
+<body>
+    <img class="logo" src="../pictures/logo2.png" alt="">
+<div class="content">
+    <h1 class="title"></h1>
+    <img class="food-img" src="" alt="">
+</div>
+
+<div id="slides" style="display:none;">
+    <div class="slide" data-name="BREAKFAST" data-color="#01e1cd" data-img="../pictures/breakfast.png">
+        <a href="../html/breakfast.html" class="link breakfast">See more 
+            <img src="../pictures/green-right-arrow.png" class="arrow" alt="">
+        </a>
+    </div>
+    <div class="slide" data-name="SNACKS" data-color="#8daffc" data-img="../pictures/snack.png">
+        <a href="../snack.html" class="link snack">See more 
+            <img src="../pictures/blue-right-arrow.png" class="arrow" alt="">
+        </a>
+    </div>
+    <div class="slide" data-name="LUNCH" data-color="#f696d5" data-img="../pictures/Macaroni.png">
+        <a href="../lunch.html" class="link lunch">See more 
+            <img src="../pictures/pink-right-arrow.png" class="arrow" alt="">
+        </a>
+    </div>
+</div>
+
+<div class="thumbs">
+    <img src="../pictures/breakfast.png" onclick="changeFood(0)">
+    <img src="../pictures/snack.png" onclick="changeFood(1)">
+    <img src="../pictures/Macaroni.png" onclick="changeFood(2)">
+</div>
+
+<script src="../javascript/food.js"></script>
+    
+</body>
+</html>

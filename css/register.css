@@ -1,0 +1,151 @@
+*{
+    box-sizing: border-box;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: 75;
+}
+body{
+    overflow: hidden;
+}
+#background-image{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.background{
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    width: 1020px ;
+    height: 570px;
+    top: 10%;
+    left: 17%;
+    border-radius: 20px;
+    opacity: 0.56;
+}
+#character{
+    width: 350px;
+    height: 500px;
+    position: relative;
+    left: 65%;
+}
+.inputs{
+    position: relative;
+    
+}
+.inputs input{
+    width: 250px;
+    height: 35px;
+    border: none;
+    background-color: #a4d8f8;
+    border-radius: 5px;
+    position: relative;
+}
+.btn{
+    border: none;
+    width: 250px;
+    height: 40px;
+    border-radius: 5px;
+    position: relative;
+    top: 250px;
+
+}
+.register{
+    background-color:#36a0e3;
+    left: 380px;
+}
+.reset{
+    background-color: #f0ccff;
+    left: 322px;
+}
+#username{
+    top: 220px;
+    left: 252px;
+}
+#password{
+    top: 220px;
+    left: 242px;
+}
+.username{
+    top: 180px;
+    left: 323px;
+}
+.password{
+    top: 180px;
+    left: 313px;
+}
+.label{
+    position: relative;
+}
+#mnumber{
+    top: 170px;
+    left: 165px;
+}
+#fnumber{
+    top: 170px;
+    left: 69px;
+}
+.mnumber{
+    top: 130px;
+    left: 325px;
+}
+.fnumber{
+    top:130px;
+    left: 225px;
+}
+#boy{
+    top: 165px;
+    left: 355px;
+    width: 20px;
+    height: 20px;
+}
+#girl{
+    top: 120px;
+    left: 420px;
+    width: 20px;
+    height: 20px;
+}
+.boy{
+    top: 187.5px;
+    left: 325px;
+}
+.girl{
+    top: 144px;
+    left: 395px;
+}
+.gender{
+    top: 185px;
+    left: 323px;
+}
+#age{
+    top: 190px;
+    left: 295px;
+}
+#address{
+    top: 190px;
+    left: 297px;
+}
+.age{
+    top: 155px;
+    left: 325px;
+}
+.address{
+    top:155px;
+    left: 355px;
+}
+#name{
+    top: 150px;
+    left: 285px;
+}
+#family{
+    top: 150px;
+    left: 295px;
+}
+.name{
+    top: 115px;
+    left: 325px;
+}
+.family{
+    top:115px;
+    left: 350px;
+}
